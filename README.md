@@ -43,3 +43,10 @@ Needed a strict SemVer 2.0 parser with no external dependencies for an environme
 - Input is stripped of surrounding whitespace before parsing.
 - Build metadata is ignored for equality and ordering, so `1.0.0+a == 1.0.0+b` and both compare equal to `1.0.0`.
 - Prerelease comparison: numeric identifiers compare as integers (so `2 < 10`); alphanumeric compare lexically; numeric always ranks below alphanumeric; fewer fields ranks below more fields when all preceding fields are equal.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
